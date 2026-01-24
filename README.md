@@ -4,23 +4,24 @@ A tool to dynamically control CPU frequency to keep temperature below a specifie
 
 ## Quick Start
 
-### Build
+### 1. Build the Binary
 ```bash
 make
 ```
+This creates the `cputemp` executable.
 
-### Find Your Sensor
+### 2. Find Your Sensor
 ```bash
 ./cputemp
 ```
 This lists available temperature sensors (e.g., `coretemp`, `k10temp`).
 
-### Run (Interactive)
+### 3. Test (Interactive)
 ```bash
 sudo ./cputemp --sensor <sensor_name> --temp 80 --verbose
 ```
 
-### Run as Daemon
+### 4. Run as Daemon
 ```bash
 sudo ./cputemp --daemon /run/cputemp.pid --sensor <sensor_name> --temp 80
 ```
@@ -34,23 +35,48 @@ sudo ./cputemp --kill-daemon /run/cputemp.pid
 
 ### Install
 ```bash
-# Install binary
+# 1. Build the binary first (if not already built)
+make
+
+# 2. Install binary
 sudo cp cputemp /usr/local/bin/
 
-# Install reset script (failsafe)
+# 3. Install reset script (failsafe)
 sudo cp reset_freq.sh /usr/local/bin/
 sudo chmod +x /usr/local/bin/reset_freq.sh
 
-# Install service
+# 4. Install service
 sudo cp cputemp.service /etc/systemd/system/
 
-# Edit service file to set your sensor name
+# 5. Edit service file to set your sensor name
 sudo nano /etc/systemd/system/cputemp.service
+# Change --sensor k10temp to your sensor (e.g., --sensor coretemp)
 
-# Reload and start
+# 6. Reload and start
 sudo systemctl daemon-reload
 sudo systemctl start cputemp
 sudo systemctl enable cputemp
+```
+
+### Troubleshooting
+
+If the service fails to start:
+
+```bash
+# Check service status
+sudo systemctl status cputemp
+
+# Check logs
+sudo journalctl -u cputemp -n 50
+
+# Verify binary exists
+ls -l /usr/local/bin/cputemp
+
+# Test binary manually
+sudo /usr/local/bin/cputemp --sensor <your_sensor> --temp 80 --verbose
+
+# Check sensor name is correct
+/usr/local/bin/cputemp  # Lists available sensors
 ```
 
 ### Service Management
