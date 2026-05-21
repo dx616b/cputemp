@@ -127,6 +127,22 @@ sudo journalctl -u cputemp | grep THROTTLE
 - Frequency is controlled via `/sys/devices/system/cpu/cpu*/cpufreq/scaling_max_freq`
 - Throttling events are always logged, even without `--verbose`
 
+## Logs
+```bash
+journalctl -u cputemp.service -f
+```
+```bash
+May 21 20:32:33 proxmox cputemp[1027]: THROTTLE: Temperature 81.000000 C exceeds target 80.000000 C, reducing frequency from 2600.000000 MHz to 2560.000000 MHz
+May 21 20:32:34 proxmox cputemp[1027]: THROTTLE: Temperature 81.000000 C exceeds target 80.000000 C, reducing frequency from 2560.000000 MHz to 2540.000000 MHz
+May 21 20:32:37 proxmox cputemp[1027]: THROTTLE: Temperature 81.000000 C exceeds target 80.000000 C, reducing frequency from 2620.000000 MHz to 2560.000000 MHz
+May 21 20:32:38 proxmox cputemp[1027]: THROTTLE: Temperature 81.000000 C exceeds target 80.000000 C, reducing frequency from 2560.000000 MHz to 2540.000000 MHz
+May 21 20:32:53 proxmox cputemp[1027]: THROTTLE: Temperature 81.000000 C exceeds target 80.000000 C, reducing frequency from 2600.000000 MHz to 2560.000000 MHz
+May 21 20:33:03 proxmox cputemp[1027]: THROTTLE: Temperature 81.000000 C exceeds target 80.000000 C, reducing frequency from 2660.000000 MHz to 2600.000000 MHz
+May 21 20:33:04 proxmox cputemp[1027]: THROTTLE: Temperature 82.000000 C exceeds target 80.000000 C, reducing frequency from 2600.000000 MHz to 2540.000000 MHz
+May 21 20:33:05 proxmox cputemp[1027]: THROTTLE: Temperature 82.000000 C exceeds target 80.000000 C, reducing frequency from 2540.000000 MHz to 2500.000000 MHz
+```
+
+
 ## License
 
 Zero-Clause BSD (public domain)
